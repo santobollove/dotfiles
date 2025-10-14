@@ -239,19 +239,32 @@ else
 fi
 };
 
-# vcpkg
-autoload -U bashcompinit
-bashcompinit
-source /opt/vcpkg/scripts/vcpkg_completion.zsh
+# --- Setup ZINIT ---
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone --depth 1 --recurse-submodules https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
-# plugins
-[[ -r "$ZDOTDIR/plugins/load-plugins.zsh" ]] && source "$ZDOTDIR/plugins/load-plugins.zsh"
-# powerline-daemon -q
-# source /usr/share/powerline/bindings/zsh/powerline.zsh
+# --- Plugins ---
+zinit load zdharma-continuum/history-search-multi-word
+zinit light zsh-users/zsh-completions
+zinit light mafredri/zsh-async
+zinit light joel-porquet/zsh-dircolors-solarized
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma-continuum/fast-syntax-highlighting
 
-# eval "$(fnm env --use-on-cd)"
+# --- Prompt (Pure) ---
+zinit ice pick"async.zsh" src"pure.zsh"
+zinit light sindresorhus/pure
 
-# autoload -U zcalc
+zinit ice depth"1" # git clone depth
+zinit ice pick"async.zsh" src"pure.zsh"
+zinit light sindresorhus/pure
+zinit light 
+
+
+autoload -Uz +X bashcompinit && bashcompinit
+
 function __calc_plugin {
     zcalc -f -e "$*"
 }
