@@ -211,12 +211,12 @@ compinit -u -d "$compfile"
 
 # alias
 alias l='lsd -F'
-alias ls='exa'
+alias ls='lsd'
 alias ld='lsd -d */'
 alias lsa='l -A'
 alias la='l -l'
 alias ll='l -ld .?*'
-alias lla='lsd -lAh'
+alias lla='ls -lAh'
 alias lt='l --tree'
 alias -g g='grep --color=auto --perl-regexp'
 alias -g G='| grep --color=auto --perl-regexp'
@@ -245,18 +245,11 @@ bashcompinit
 source /opt/vcpkg/scripts/vcpkg_completion.zsh
 
 # plugins
+[[ -r "$ZDOTDIR/plugins/load-plugins.zsh" ]] && source "$ZDOTDIR/plugins/load-plugins.zsh"
 # powerline-daemon -q
 # source /usr/share/powerline/bindings/zsh/powerline.zsh
-[[ -r $ZDOTDIR/plugins/zsh-completions/zsh-completions.plugin.zsh ]] && source $ZDOTDIR/plugins/zsh-completions/zsh-completions.plugin.zsh
-[[ -r $ZDOTDIR/plugins/globalias/globalias.plugin.zsh ]] && source $ZDOTDIR/plugins/globalias/globalias.plugin.zsh
-[[ -r $ZDOTDIR/plugins/zsh-async/async.zsh ]] && source $ZDOTDIR/plugins/zsh-async/async.zsh
-[[ -r $ZDOTDIR/plugins/zsh-dircolors-solarized/zsh-dircolors-solarized.zsh ]] && source $ZDOTDIR/plugins/zsh-dircolors-solarized/zsh-dircolors-solarized.zsh
-# theme
-[[ -r $ZDOTDIR/themes/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source $ZDOTDIR/themes/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[[ -r $ZDOTDIR/plugins/pure/pure.zsh ]] && source $ZDOTDIR/plugins/pure/pure.zsh
-#	[[ -r $ZDOTDIR/themes/blox-zsh-theme/blox.zsh ]] && source $ZDOTDIR/themes/blox-zsh-theme/blox.zsh
 
-eval "$(fnm env --use-on-cd)"
+# eval "$(fnm env --use-on-cd)"
 
 # autoload -U zcalc
 function __calc_plugin {
