@@ -1,2 +1,3 @@
 **Personal Recommendation**  
-Artix NEW
+Artix NEW 
+Added ZINIT Plugin manager.
