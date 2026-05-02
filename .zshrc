@@ -221,8 +221,6 @@ alias lt='l --tree'
 alias -g g='grep --color=auto --perl-regexp'
 alias -g G='| grep --color=auto --perl-regexp'
 alias -g clip='xclip -selection clipboard'
-alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias yay='yay --sudo doas --sudoflags -- --save'
 
 # some personal alias
 [[ -r $HOME/Machine/zsh/aliases.zsh ]] && source $HOME/Machine/zsh/aliases.zsh
