@@ -95,6 +95,8 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light sindresorhus/pure
+zinit light mfaerevaag/wd
+zinit snippet OMZP::git
 
 # --- 7. Aliases & Finalization ---
 alias l='lsd -F'
