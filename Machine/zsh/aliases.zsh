@@ -42,6 +42,10 @@ alias -g G='| grep --color=auto --perl-regexp'
 alias -g clip='xclip -selection clipboard'
 alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
+# Git
+alias sign-on='git config commit.gpgsign true'
+alias sign-off='git config commit.gpgsign false'
+
 # --- Functions ---
 
 # Create and move to directory
