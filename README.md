@@ -1,8 +1,8 @@
-# Dotfiles 🛠️
+# Dotfiles
 
 My personal configuration for a minimalist, efficient Linux environment.
 
-## 📂 Repository Structure
+## Repository Structure
 This repository manages configurations for my shell, window manager, and personal automation scripts.
 
 ```text
