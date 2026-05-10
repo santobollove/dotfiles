@@ -21,7 +21,7 @@ export LESS_TERMCAP_md=$'\e[31m'
 
 # --- 2. Shell Options ---
 setopt AUTO_CD AUTO_CONTINUE CORRECT NO_NOMATCH LIST_PACKED ALWAYS_TO_END 
-setopt GLOB_COMPLETE COMPLETE_ALIASES COMPLETE_IN_WORD HIST_VERIFY SHARE_HISTORY
+setopt COMPLETE_ALIASES COMPLETE_IN_WORD HIST_VERIFY SHARE_HISTORY
 setopt HIST_IGNORE_SPACE HIST_SAVE_NO_DUPS HIST_IGNORE_ALL_DUPS EXTENDED_GLOB
 setopt TRANSIENT_RPROMPT INTERACTIVE_COMMENTS LONG_LIST_JOBS
 
@@ -55,6 +55,7 @@ first_tab() {
 zle -N first_tab
 
 # --- 4. Bindings ---
+bindkey '^?' backward-delete-char
 bindkey -- '^I'   first_tab
 bindkey -- '^K'   up-line-or-beginning-search
 bindkey -- '^J'   down-line-or-beginning-search
@@ -64,16 +65,16 @@ bindkey -- '^J'   down-line-or-beginning-search
 [[ -n ${terminfo[kdch1]} ]] && bindkey -- "${terminfo[kdch1]}" delete-char
 [[ -n ${terminfo[kend]}  ]] && bindkey -- "${terminfo[kend]}"  end-of-line
 [[ -n ${terminfo[kcuf1]} ]] && bindkey -- "${terminfo[kcuf1]}" forward-char
-[[ -n ${terminfo[kcub1]} ]] && bindkey -- "${terminfo[kcub1]}" backward-delete-char
 [[ -n ${terminfo[khome]} ]] && bindkey -- "${terminfo[khome]}" beginning-of-line
+[[ -n ${terminfo[kcub1]} ]] && bindkey -- "${terminfo[kcub1]}" backward-char
 
 # --- 5. Completion Logic (Prioritizing Commands) ---
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$comppath"
 
 # Force command/option completion first; file paths last
-zstyle ':completion:*' completer _complete _files
-zstyle ':completion:*' tag-order 'options' 'parameters' 'functions' 'aliases' 'local-directories' 'path-directories' 'files'
+zstyle ':completion:*' completer _extensions _complete _approximate
+zstyle ':completion:*' tag-order 'commands' 'builtins' 'functions' 'aliases' 'options' 'parameters' 'local-directories' 'path-directories' 'files'
 
 # UI Settings
 zstyle ':completion:*:*:*:*:*' menu select
@@ -88,8 +89,14 @@ zstyle ':completion:*:ssh:*' tag-order 'hosts:-host:host hosts:-domain:domain ho
 zstyle ':completion:*:(scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
 # --- Setup ZINIT ---
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone --depth 1 --recurse-submodules https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+[ ! -d $ZINIT_HOME/.git ] && git clone --depth 1 --recurse-submodules \
+    https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+
+autoload -Uz compinit
+compinit -u -d "$compfile"
+
 source "${ZINIT_HOME}/zinit.zsh"
 # --- 6. Plugins (Zinit) ---
 zinit light zsh-users/zsh-autosuggestions
@@ -103,4 +110,4 @@ alias l='lsd -F'
 alias ls='lsd'
 [[ -r $HOME/Machine/zsh/aliases.zsh ]] && source $HOME/Machine/zsh/aliases.zsh
 
-compinit -u -d "$compfile"
+export GPG_TTY=$(tty)
