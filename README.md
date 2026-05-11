@@ -2,6 +2,10 @@
 
 My personal configuration for a minimalist, efficient Linux environment.
 
+> [!IMPORTANT]
+> **Hardcoded Paths:** Some scripts currently contain hardcoded paths pointing to `/home/vash/`. 
+> Before running these, you must update the paths to match your `$HOME` directory.
+
 ## Repository Structure
 This repository manages configurations for my shell, window manager, and personal automation scripts.
 
